@@ -4,22 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simulador de Tienda</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-
-    <div id="saldo">Cargando...</div>
-    <div id="productos">Cargando...</div>
+    <h1 class="titulo">Simulador de Tienda</h1>
     
-    <input type="text" id="productoInput" placeholder="Nombre del producto">
-    <button id="agregarAlCarrito">Agregar al carrito</button>
-    <button id="finalizarCompra">Finalizar compra</button>
-   
-
+    <div>
+        <p>Tu saldo actual es: $<span id="saldo">1000</span></p>
+        
+        <h2>Productos disponibles:</h2>
+        <ul id="productos">
+            <li>Producto A - Computadora portátil - $800</li>
+            <li>Producto B - Monitor - $150</li>
+            <li>Producto C - Teclado y mouse - $50</li>
+        </ul>
+        
+        <h2>Carrito de Compras:</h2>
+        <ul id="carrito">
+            <!-- Los productos del carrito se mostrarán aquí -->
+        </ul>
+        
+        <input type="text" id="productoInput" placeholder="Nombre del producto">
+        <button id="agregarAlCarrito">Agregar al carrito</button>
+        <button id="finalizarCompra">Finalizar compra</button>
+    </div>
     
-
-
-
-
     <script src="main.js"></script>
 </body>
 </html>
