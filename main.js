@@ -92,3 +92,59 @@ document.getElementById("agregarAlCarrito").addEventListener("click", function (
 document.getElementById("finalizarCompra").addEventListener("click", function () {
   finalizarCompra();
 });
+
+// Asocia eventos y funciones de respuesta
+agregarAlCarritoButton.addEventListener("click", agregarAlCarrito);
+finalizarCompraButton.addEventListener("click", finalizarCompra);
+function limpiarElCarrito() {
+    // Devolver los productos al saldo
+    for (const nombreProducto in carrito) {
+        saldo += productosDisponibles.find(producto => producto.nombre === nombreProducto).precio * carrito[nombreProducto];
+    }
+
+    // Limpiar el carrito
+    carrito = {};
+
+    // Actualizar el saldo y el carrito en la página
+    actualizarSaldo();
+    actualizarCarrito();
+
+    // Notificar al usuario
+    mostrarMensaje("El carrito ha sido limpiado.");
+}
+const limpiarCarritoButton = document.getElementById("limpiarCarrito");
+limpiarCarritoButton.addEventListener("click", limpiarElCarrito);
+function mostrarMensaje(mensaje) {
+    const notificacion = document.getElementById("notificacion");
+    notificacion.textContent = mensaje;
+}
+
+localStorage.setItem("saldo", saldo);
+
+// Recupera el saldo del localStorage (si existe)
+const saldoGuardado = localStorage.getItem("saldo");
+if (saldoGuardado) {
+    saldo = parseFloat(saldoGuardado);
+    actualizarSaldo();
+}
+
+// Almacenar el carrito en el localStorage
+localStorage.setItem("carrito", JSON.stringify(carrito));
+
+// Recuperar el carrito del localStorage al cargar la página
+const carritoGuardado = localStorage.getItem("carrito");
+if (carritoGuardado) {
+    carrito = JSON.parse(carritoGuardado);
+    actualizarCarrito();
+}
+
+// Asociar eventos a los botones
+agregarAlCarritoButton.addEventListener("click", agregarAlCarrito);
+finalizarCompraButton.addEventListener("click", finalizarCompra);
+limpiarCarritoButton.addEventListener("click", limpiarElCarrito);
+
+// Función para mostrar mensajes en el área de notificación
+function mostrarMensaje(mensaje) {
+    const notificacion = document.getElementById("notificacion");
+    notificacion.textContent = mensaje;
+}
