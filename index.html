@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simulador de Tienda</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
 </head>
 <body>
     <h1 class="titulo">Simulador de Tienda</h1>
@@ -13,15 +16,37 @@
         <p>Tu saldo actual es: $<span id="saldo">1000</span></p>
         
         <h2>Productos disponibles:</h2>
-        <ul id="productos">
-            <li>Producto A - Computadora portátil - $800</li>
-            <li>Producto B - Monitor - $150</li>
-            <li>Producto C - Teclado y mouse - $50</li>
-        </ul>
-        
-        <h2>Carrito de Compras:</h2>
+<div class="row" id="productos">
+    <div class="col-md-4">
+        <div class="card">
+            <img src="url_de_la_imagen_a" class="card-img-top" alt="Producto A">
+            <div class="card-body">
+                <h5 class="card-title">Computadora Portatil</h5>
+                <p class="card-text">$50</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <img src="url_de_la_imagen_b" class="card-img-top" alt="Producto B">
+            <div class="card-body">
+                <h5 class="card-title">Monitor</h5>
+                <p class="card-text">$30</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <img src="url_de_la_imagen_c" class="card-img-top" alt="Producto C">
+            <div class="card-body">
+                <h5 class="card-title">Mouse y teclado</h5>
+                <p class="card-text">$20</p>
+            </div>
+        </div>
+    </div>
+</div>
         <ul id="carrito">
-            <!-- Los productos del carrito se mostrarán aquí -->
+            
         </ul>
         
         <input type="text" id="productoInput" placeholder="Nombre del producto">

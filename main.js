@@ -4,9 +4,9 @@ let carrito = {};
 
 // Base de datos de productos disponibles como un array de objetos
 let productosDisponibles = [
-    { nombre: "Producto A", precio: 50 },
-    { nombre: "Producto B", precio: 30 },
-    { nombre: "Producto C", precio: 20 },
+    { nombre: "Producto A", precio: 800 },
+    { nombre: "Producto B", precio: 150 },
+    { nombre: "Producto C", precio: 50 },
 ];
 
 // Referencias a elementos HTML
@@ -39,7 +39,7 @@ function agregarAlCarrito() {
     const productoEncontrado = productosDisponibles.find((producto) => producto.nombre.toLowerCase() === nombreProducto.toLowerCase());
 
     if (!productoEncontrado) {
-        alert("Producto no válido. Por favor, elige un producto de la lista.");
+        Swal.fire("Error", "Producto no válido. Por favor, elige un producto de la lista.", "error");
         return;
     }
 
@@ -57,7 +57,7 @@ function agregarAlCarrito() {
         actualizarSaldo();
         actualizarCarrito();
     } else {
-        alert("No tienes suficiente saldo para comprar ese producto.");
+        Swal.fire("Error", "No tienes suficiente saldo para comprar ese producto.", "error");
     }
 }
 
@@ -81,55 +81,47 @@ function finalizarCompra() {
     }
 
     resumenCompra += `Saldo restante: $${saldo}\n¡Gracias por tu compra!`;
-    alert(resumenCompra);
+    Swal.fire("Resumen de Compra", resumenCompra, "success");
 }
-// Agregar event listener al botón "Agregar al carrito"
-document.getElementById("agregarAlCarrito").addEventListener("click", function () {
-  agregarAlCarrito();
-});
 
-// Agregar event listener al botón "Finalizar compra"
-document.getElementById("finalizarCompra").addEventListener("click", function () {
-  finalizarCompra();
-});
-
-// Asocia eventos y funciones de respuesta
+// Asociar eventos a los botones
 agregarAlCarritoButton.addEventListener("click", agregarAlCarrito);
 finalizarCompraButton.addEventListener("click", finalizarCompra);
-function limpiarElCarrito() {
-    // Devolver los productos al saldo
-    for (const nombreProducto in carrito) {
-        saldo += productosDisponibles.find(producto => producto.nombre === nombreProducto).precio * carrito[nombreProducto];
-    }
 
-    // Limpiar el carrito
-    carrito = {};
-
-    // Actualizar el saldo y el carrito en la página
-    actualizarSaldo();
-    actualizarCarrito();
-
-    // Notificar al usuario
-    mostrarMensaje("El carrito ha sido limpiado.");
-}
-const limpiarCarritoButton = document.getElementById("limpiarCarrito");
-limpiarCarritoButton.addEventListener("click", limpiarElCarrito);
+// Función para mostrar mensajes en el área de notificación
 function mostrarMensaje(mensaje) {
     const notificacion = document.getElementById("notificacion");
     notificacion.textContent = mensaje;
 }
 
-localStorage.setItem("saldo", saldo);
+// Función para limpiar el carrito
+function limpiarElCarrito() {
+    if (Object.keys(carrito).length > 0) {
+        // Devolver los productos al saldo
+        for (const nombreProducto in carrito) {
+            const cantidad = carrito[nombreProducto];
+            const precioProducto = productosDisponibles.find(producto => producto.nombre === nombreProducto).precio;
+            saldo += cantidad * precioProducto;
+        }
 
-// Recupera el saldo del localStorage (si existe)
-const saldoGuardado = localStorage.getItem("saldo");
-if (saldoGuardado) {
-    saldo = parseFloat(saldoGuardado);
-    actualizarSaldo();
+        // Limpiar el carrito
+        carrito = {};
+        
+        // Actualizar el saldo y el carrito en la página
+        actualizarSaldo();
+        actualizarCarrito();
+
+        // Notificar al usuario
+        mostrarMensaje("El carrito ha sido limpiado.");
+    }
 }
 
-// Almacenar el carrito en el localStorage
-localStorage.setItem("carrito", JSON.stringify(carrito));
+// Asociar evento al botón "Limpiar Carrito"
+const limpiarCarritoButton = document.getElementById("limpiarCarrito");
+limpiarCarritoButton.addEventListener("click", limpiarElCarrito);
+
+// Remover la llamada a limpiarElCarrito al cargar la página
+// limpiarElCarrito(); // Elimina esta línea
 
 // Recuperar el carrito del localStorage al cargar la página
 const carritoGuardado = localStorage.getItem("carrito");
@@ -138,13 +130,33 @@ if (carritoGuardado) {
     actualizarCarrito();
 }
 
-// Asociar eventos a los botones
-agregarAlCarritoButton.addEventListener("click", agregarAlCarrito);
-finalizarCompraButton.addEventListener("click", finalizarCompra);
-limpiarCarritoButton.addEventListener("click", limpiarElCarrito);
-
-// Función para mostrar mensajes en el área de notificación
-function mostrarMensaje(mensaje) {
-    const notificacion = document.getElementById("notificacion");
-    notificacion.textContent = mensaje;
+// Restablecer el valor de saldo solo si no hay un valor guardado en el localStorage
+if (!localStorage.getItem("saldo")) {
+    saldo = 1000;
+    actualizarSaldo();
 }
+
+// Al cargar la página, verificar si el carrito está vacío y mostrar un mensaje en consecuencia
+if (Object.keys(carrito).length === 0) {
+    mostrarMensaje("El carrito está vacío.");
+}
+
+// URL de la API de ejemplo
+const apiUrl = 'https://jsonplaceholder.typicode.com/posts';
+
+// Función para cargar datos desde la API
+async function cargarDatosDesdeAPI() {
+    try {
+        const response = await fetch(apiUrl);
+        if (!response.ok) {
+            throw new Error('No se pudo cargar los datos desde la API.');
+        }
+        const data = await response.json();
+        console.log(data);
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+// Llamar a la función para cargar datos desde la API
+cargarDatosDesdeAPI();
