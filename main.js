@@ -4,9 +4,9 @@ let carrito = {};
 
 // Base de datos de productos disponibles como un array de objetos
 let productosDisponibles = [
-    { nombre: "Producto A", precio: 800 },
-    { nombre: "Producto B", precio: 150 },
-    { nombre: "Producto C", precio: 50 },
+    { nombre: "computadora portatil", precio: 800, imagen: "url_de_la_imagen_a" },
+    { nombre: "monitor", precio: 150, imagen: "url_de_la_imagen_b" },
+    { nombre: "Teclado y Mouse ", precio: 50, imagen: "url_de_la_imagen_c" },
 ];
 
 // Referencias a elementos HTML
@@ -160,3 +160,32 @@ async function cargarDatosDesdeAPI() {
 
 // Llamar a la función para cargar datos desde la API
 cargarDatosDesdeAPI();
+
+// Función para actualizar el saldo en la página
+function actualizarSaldo() {
+    const saldoElement = document.getElementById("saldo");
+    saldoElement.textContent = saldo;
+}
+
+// Llama a la función para mostrar el saldo actual
+actualizarSaldo();
+
+// Referencia al elemento del título principal
+const tituloPrincipal = document.querySelector(".titulo");
+
+// Detecta el evento de scroll
+window.addEventListener("scroll", () => {
+    // Verifica la posición del scroll
+    if (window.scrollY > 50) {
+        // Si el usuario ha hecho scroll hacia abajo más de 50 píxeles, cambia la posición del título a "fixed"
+        tituloPrincipal.style.position = "fixed";
+        tituloPrincipal.style.top = "0";
+        tituloPrincipal.style.zIndex = "1000";
+        // Agrega margen superior al contenido principal para evitar superposiciones
+        document.body.style.marginTop = tituloPrincipal.clientHeight + "px";
+    } else {
+        // Si el usuario está en la parte superior de la página, restaura la posición y margen originales
+        tituloPrincipal.style.position = "static";
+        document.body.style.marginTop = "0";
+    }
+});

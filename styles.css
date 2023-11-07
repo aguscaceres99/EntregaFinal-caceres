@@ -1,9 +1,9 @@
-/* Estilos para el título */
+
 h1 {
     color: #333;
 }
 
-/* Estilos para los botones */
+
 button {
     background-color: #007bff;
     color: #fff;
@@ -13,7 +13,7 @@ button {
     margin: 5px;
 }
 
-/* Estilos para las listas */
+
 ul {
     list-style: none;
     padding: 0;
@@ -23,7 +23,7 @@ li {
     margin-bottom: 5px;
 }
 
-/* Estilos para el contenedor principal */
+
 div {
     margin: 20px;
     padding: 20px;
@@ -31,10 +31,27 @@ div {
     border-radius: 5px;
 }
 
-/* Estilos para los inputs */
 input[type="text"] {
     padding: 5px;
 }
 .titulo{
     text-align: center;
+}
+
+.saldo-container {
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.saldo-container p {
+    font-size: 18px;
+    margin: 0;
+}
+
+#saldo {
+    font-size: 24px;
+    font-weight: bold;
 }
